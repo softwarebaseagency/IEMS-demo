@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overview - IEMS Demo</title>
+<meta name="description" content="Interface demo of IEMS, the Base Agency business management system, with sample data.">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.ico" sizes="32x32 16x16">
+<link rel="stylesheet" href="static/css/tokens.css">
+<link rel="stylesheet" href="static/css/app.css">
+<link rel="stylesheet" href="static/css/charts.css">
+<link rel="stylesheet" href="static/css/utilities.css">
+<link rel="stylesheet" href="static/css/iems.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="app">
+  <nav class="sidebar on-dark" id="sidebar" aria-label="IEMS modules">
+    <div class="sidebar__brand">
+      <span class="sidebar__crest" aria-hidden="true">IE</span>
+      <span class="sidebar__wordmark">
+        <span class="sidebar__name">IEMS</span>
+        <span class="sidebar__sub">Altun Creative · sample</span>
+      </span>
+    </div>
+
+    <div class="sidebar__scroll" id="navScroll"></div>
+
+    <div class="sidebar__foot">
+      <img src="static/img/base-logo-white.png" width="180" height="30" alt="Base Agency">
+      <span>Interface demo · sample data</span>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="btn btn--icon topbar__menu" id="menuBtn" type="button"
+              aria-expanded="false" aria-controls="sidebar"></button>
+
+      <label class="search">
+        <span class="search__icon" id="searchIcon"></span>
+        <input type="search" id="globalSearch" autocomplete="off" placeholder="Search">
+      </label>
+
+      <span class="topbar__spacer"></span>
+
+      <span class="topbar__clock" id="clock" aria-hidden="true"></span>
+
+      <button class="btn btn--primary collapse-label" id="newBtn" type="button"
+              aria-haspopup="menu" aria-expanded="false" aria-label="Create new">
+        <span>New</span>
+      </button>
+      <button class="btn btn--icon" id="langBtn" type="button"
+              aria-haspopup="menu" aria-expanded="false"></button>
+      <button class="btn btn--icon" id="bellBtn" type="button"
+              aria-haspopup="menu" aria-expanded="false"></button>
+      <button class="btn btn--icon" id="userBtn" type="button"
+              aria-haspopup="menu" aria-expanded="false"></button>
+    </header>
+
+    <main class="content" id="main" tabindex="-1"></main>
+  </div>
+</div>
+
+<div class="toaster" id="toaster" aria-live="polite"></div>
+
+<script src="static/js/icons.js"></script>
+<script src="static/js/i18n.js"></script>
+<script src="static/js/charts.js"></script>
+<script src="static/js/ui.js"></script>
+<script src="static/js/data.js"></script>
+<script src="static/js/iems.js"></script>
+
+<script src="static/js/views/dashboard.js"></script>
+<script src="static/js/views/tasks.js"></script>
+<script src="static/js/views/approvals.js"></script>
+<script src="static/js/views/crm.js"></script>
+<script src="static/js/views/meetings.js"></script>
+<script src="static/js/views/commercial.js"></script>
+<script src="static/js/views/finance.js"></script>
+<script src="static/js/views/projects.js"></script>
+<script src="static/js/views/procurement.js"></script>
+<script src="static/js/views/attendance.js"></script>
+<script src="static/js/views/people.js"></script>
+<script src="static/js/views/reports.js"></script>
+<script src="static/js/views/admin.js"></script>
+
+<script src="static/js/app.js"></script>
+</body>
+</html>

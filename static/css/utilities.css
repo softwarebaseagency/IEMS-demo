@@ -1,0 +1,79 @@
+/* ============================================================================
+   Base Agency Design System — Utilities, narrow screens, print
+
+   The small helper set the component layer and every view lean on, plus the
+   two responsive corrections and the print rules that the shell needs.
+   Load this last, after app.css and charts.css.
+   ========================================================================= */
+
+/* ============================================================================
+   UTILITIES
+   The small set of helpers the component layer and the views both lean on.
+   Deliberately short: anything that needs more than one declaration in more
+   than one place earns a real class instead.
+   ========================================================================= */
+.muted     { color: var(--ink-muted); }
+.secondary { color: var(--ink-secondary); }
+
+.text-2xs { font-size: var(--text-2xs); }
+.text-xs  { font-size: var(--text-xs); }
+.text-sm  { font-size: var(--text-sm); }
+
+.row {
+  display: flex; align-items: center; gap: var(--space-3);
+  min-width: 0;
+}
+.row-tight {
+  display: flex; align-items: center; gap: var(--space-2);
+  flex-wrap: wrap; min-width: 0;
+}
+/* Pushes a trailing element to the end of a flex row in both directions */
+.push { margin-inline-start: auto; }
+
+/* ============================================================================
+   NARROW SCREENS
+   The back office is used on a laptop and the lane on a touchscreen, but the
+   demo gets opened on a phone often enough that neither should break there.
+   ========================================================================= */
+@media (max-width: 860px) {
+  /* A topbar <select> is usually context (which branch, which year), not a
+     control you need on a phone. The page still states it in the header. */
+  .topbar .select { display: none; }
+}
+@media (max-width: 640px) {
+  /* app.css collapses the search to its minimum here so the icon buttons
+     fit. With the branch selector already gone there is room to give it the
+     leftover width instead, and a search box you can actually type in beats
+     a 44px stub. */
+  .topbar .search { flex: 1 1 auto; min-width: 96px; }
+  .topbar__spacer { display: none; }
+
+  /* A notice with a badge or a button beside it has the same problem the
+     card header does: the aside holds its width and the sentence loses.
+     Wrap it onto its own line instead. */
+  .notice { flex-wrap: wrap; }
+  .notice .push { margin-inline-start: 0; width: 100%; }
+
+  /* A card header with a tool in it squeezes the title into a column two
+     words wide — stack them instead of letting the title lose. */
+  .card__head { flex-direction: column; align-items: stretch; }
+  .card__tools { justify-content: flex-start; flex-wrap: wrap; }
+
+  /* A primary topbar action can drop to icon-only here. Mark it up as
+     <button class="btn btn--primary btn--sm collapse-label" aria-label="...">
+     <svg/><span>Label</span></button> — the aria-label carries the name once
+     the text is hidden, so the control never becomes anonymous. */
+  .collapse-label span { display: none; }
+  .collapse-label { padding-inline: var(--space-3); }
+}
+
+/* ============================================================================
+   PRINT — a dashboard that cannot be printed is half a tool
+   ========================================================================= */
+@media print {
+  .sidebar, .topbar, .pagehead__actions, .card__foot,
+  .notice, .toaster, .scrim, .tabs, .tabletools { display: none !important; }
+  .app { display: block; }
+  .content { padding: 0; }
+  .card { border: 0; box-shadow: none; break-inside: avoid; }
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in - IEMS Demo</title>
+<meta name="description" content="Interface demo of IEMS, the Base Agency business management system, with sample data.">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.ico" sizes="32x32 16x16">
+<link rel="stylesheet" href="static/css/tokens.css">
+<link rel="stylesheet" href="static/css/app.css">
+<link rel="stylesheet" href="static/css/login.css">
+</head>
+<body>
+
+<main class="login">
+  <div class="login__form-side">
+    <div class="login__brand">
+      <span class="login__crest" aria-hidden="true">IE</span>
+      <span>
+        <span class="login__brand-name">IEMS</span>
+        <span class="login__brand-sub">Interface demo</span>
+      </span>
+
+      <div class="login__lang">
+        <button type="button" id="langBtn" aria-haspopup="menu" aria-expanded="false">
+          <span id="langIcon"></span><span id="langLabel">EN</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="login__center">
+      <h1 class="login__title">Sign in</h1>
+      <p class="login__lede">
+        The integrated management system of a made-up agency, Altun Creative, filled with sample data.
+        The demo account is already filled in.
+      </p>
+
+      <form class="login__fields" id="loginForm" novalidate>
+        <div class="login__field">
+          <label class="login__label" for="username">Email</label>
+          <div class="login__input-wrap">
+            <input class="login__input" id="username" name="username" type="email"
+                   value="shilan@altun.example" autocomplete="username" spellcheck="false">
+          </div>
+        </div>
+
+        <div class="login__field">
+          <label class="login__label" for="password">Password</label>
+          <div class="login__input-wrap">
+            <input class="login__input login__input--pw" id="password" name="password"
+                   type="password" value="demo2026" autocomplete="current-password">
+            <button class="login__reveal" id="revealBtn" type="button"
+                    aria-label="Show password" aria-pressed="false"></button>
+          </div>
+        </div>
+
+        <div class="login__row">
+          <label class="login__check"><input type="checkbox" checked> Keep me signed in</label>
+          <a class="login__link" href="#" id="forgotLink">Forgotten password?</a>
+        </div>
+
+        <button class="login__submit" id="submitBtn" type="submit">
+          <span id="submitLabel">Sign in</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="login__foot">
+      <img src="static/img/base-logo-navy.png" alt="Base Agency">
+      <span>Built by Base Agency</span>
+    </div>
+  </div>
+
+  <aside class="login__brand-side on-dark" aria-hidden="true">
+    <span class="login__mesh"></span>
+    <span class="login__glow"></span>
+
+    <div class="login__panel-top">
+      <p class="login__quote">From the first enquiry to the last receipt, and everyone who did the work.</p>
+      <p class="login__quote-sub">
+        Leads, meetings, quotations and their documents, finance, projects, procurement and the door
+        attendance device, in one system with a second pair of eyes on every decision.
+      </p>
+
+      <div class="login__modules">
+        <span class="login__module"><b>03</b> Leads &amp; clients</span>
+        <span class="login__module"><b>05</b> Quotations</span>
+        <span class="login__module"><b>06</b> Finance</span>
+        <span class="login__module"><b>09</b> Attendance</span>
+      </div>
+    </div>
+
+    <div class="login__panel-bottom">
+      <div class="login__stats">
+        <div><div class="login__stat-value">13</div>
+             <div class="login__stat-label">Quotations</div></div>
+        <div><div class="login__stat-value">59K</div>
+             <div class="login__stat-label">USD this month</div></div>
+        <div><div class="login__stat-value">6</div>
+             <div class="login__stat-label">Approvals</div></div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<div class="toaster" id="toaster" aria-live="polite"></div>
+
+<script src="static/js/icons.js"></script>
+<script src="static/js/i18n.js"></script>
+<script src="static/js/ui.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var DEMO = "This is only a demo. Nothing is saved.";
+  I18n.DICT["demo.entryDisabled"] = DEMO;
+  I18n.restore();
+  I18n.apply();
+
+  document.getElementById("langIcon").innerHTML = Icon("globe", { size: 14 });
+  document.getElementById("langLabel").textContent = I18n.meta().short;
+  document.getElementById("revealBtn").innerHTML = Icon("eye", { size: 17 });
+
+  var pw = document.getElementById("password");
+  var reveal = document.getElementById("revealBtn");
+  reveal.addEventListener("click", function () {
+    var shown = pw.type === "text";
+    pw.type = shown ? "password" : "text";
+    reveal.setAttribute("aria-pressed", String(!shown));
+    reveal.setAttribute("aria-label", shown ? "Show password" : "Hide password");
+    reveal.innerHTML = Icon(shown ? "eye" : "eyeOff", { size: 17 });
+    pw.focus();
+  });
+
+  var langBtn = document.getElementById("langBtn");
+  var menu = null;
+  function closeMenu() {
+    if (!menu) { return; }
+    menu.remove();
+    menu = null;
+    langBtn.setAttribute("aria-expanded", "false");
+    document.removeEventListener("click", onDoc, true);
+  }
+  function onDoc(e) {
+    if (menu && !menu.contains(e.target) && !langBtn.contains(e.target)) { closeMenu(); }
+  }
+  langBtn.addEventListener("click", function () {
+    if (menu) { closeMenu(); return; }
+    menu = document.createElement("div");
+    menu.className = "menu";
+    menu.setAttribute("role", "menu");
+    menu.innerHTML = '<div class="menu__label">' + UI.esc(I18n.t("act.language")) + "</div>" +
+      I18n.all().map(function (l) {
+        return '<button type="button" role="menuitemradio" data-lang="' + l.code +
+          '" aria-checked="' + (l.code === I18n.get()) + '"><span style="min-width:0">' +
+          UI.esc(l.meta.native) + '<span class="muted text-2xs" style="display:block">' +
+          UI.esc(l.meta.name + " - " + l.meta.dir.toUpperCase()) +
+          (l.implemented ? "" : " - not in this demo") + "</span></span></button>";
+      }).join("");
+    document.body.appendChild(menu);
+    var box = langBtn.getBoundingClientRect();
+    menu.style.left = Math.max(8, Math.min(window.innerWidth - menu.offsetWidth - 8,
+      box.right - menu.offsetWidth)) + "px";
+    menu.style.top = (box.bottom + window.scrollY + 6) + "px";
+    langBtn.setAttribute("aria-expanded", "true");
+    menu.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-lang]");
+      if (!b) { return; }
+      if (!I18n.set(b.getAttribute("data-lang"))) { UI.toast(I18n.t("demo.langOnly"), "globe"); }
+      else { document.getElementById("langLabel").textContent = I18n.meta().short; }
+      closeMenu();
+    });
+    setTimeout(function () { document.addEventListener("click", onDoc, true); }, 0);
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeMenu(); } });
+
+  document.getElementById("forgotLink").addEventListener("click", function (e) {
+    e.preventDefault();
+    UI.toast(DEMO, "lock");
+  });
+
+  var btn = document.getElementById("submitBtn");
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (btn.getAttribute("data-busy") === "true") { return; }
+    btn.setAttribute("data-busy", "true");
+    btn.innerHTML = '<span class="spinner"></span><span>Signing in...</span>';
+    setTimeout(function () { location.href = "app.html#/dashboard"; }, 500);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# ---- Base Agency design system ---------------------------------------------
+# Base Meridion is licensed and must not be redistributed. Nothing breaks
+# without it: tokens.css names the family first and falls through to the
+# platform sans, so the published build renders correctly. The logo and the
+# favicon are fine to publish.
+static/fonts/
+static/css/brand-fonts.css
+BaseWebDesign/
+.agents
+.impeccable/
+.claude/

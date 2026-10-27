@@ -1,0 +1,255 @@
+/* ============================================================================
+   Base Agency Design System — Sign-in screen
+   ========================================================================= */
+
+.login {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+}
+@media (max-width: 899px) {
+  .login { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- Left: the form ---------------------------------------------------- */
+.login__form-side {
+  display: flex; flex-direction: column;
+  padding: var(--space-8) var(--space-10);
+  background: var(--surface);
+  min-width: 0;
+}
+@media (max-width: 599px) {
+  .login__form-side { padding: var(--space-6) var(--space-5); }
+}
+
+.login__brand {
+  display: flex; align-items: center; gap: var(--space-3);
+  flex: 0 0 auto;
+}
+.login__crest {
+  width: 40px; height: 40px; flex: 0 0 auto;
+  border-radius: var(--radius);
+  background: var(--brand-navy); color: var(--brand-yellow);
+  display: grid; place-items: center;
+  font-weight: 700; font-size: var(--text-sm); letter-spacing: 0.03em;
+}
+.login__brand-name {
+  display: block;
+  font-size: var(--text-md); font-weight: 600; letter-spacing: -0.015em;
+}
+.login__brand-sub {
+  display: block;
+  font-size: var(--text-2xs); color: var(--ink-muted);
+  letter-spacing: 0.07em; text-transform: uppercase;
+}
+
+.login__center {
+  flex: 1 1 auto;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-block: var(--space-10);
+  width: 100%; max-width: 392px;
+}
+
+.login__title {
+  font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em;
+  line-height: 1.15; text-wrap: balance;
+}
+.login__lede {
+  font-size: var(--text-sm); color: var(--ink-secondary);
+  margin-top: var(--space-2); max-width: 46ch;
+}
+
+.login__fields {
+  display: flex; flex-direction: column; gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+.login__field { display: flex; flex-direction: column; gap: 6px; }
+.login__label { font-size: var(--text-xs); font-weight: 600; color: var(--ink-secondary); }
+.login__input-wrap { position: relative; }
+.login__input {
+  width: 100%; height: 44px; /* >=44px touch target */
+  padding-inline: var(--space-4) var(--space-4);
+  border: 1px solid var(--border-strong); border-radius: var(--radius);
+  background: var(--surface);
+  font-size: var(--text-md); /* 16px — no iOS auto-zoom */
+  transition: border-color var(--dur-micro) var(--ease-out),
+              box-shadow var(--dur-micro) var(--ease-out);
+}
+.login__input::placeholder { color: var(--ink-muted); }
+.login__input:hover { border-color: var(--brand-navy-300); }
+.login__input:focus {
+  outline: none; border-color: var(--brand-navy);
+  box-shadow: 0 0 0 3px rgba(12, 36, 69, 0.12);
+}
+.login__input--pw { padding-inline-end: 46px; }
+
+.login__reveal {
+  position: absolute; inset-inline-end: 4px; top: 50%; translate: 0 -50%;
+  width: 36px; height: 36px; border: 0; border-radius: var(--radius-sm);
+  background: none; color: var(--ink-muted); cursor: pointer;
+  display: grid; place-items: center;
+  transition: background var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+}
+.login__reveal:hover { background: var(--surface-hover); color: var(--ink); }
+.login__reveal svg { width: 17px; height: 17px; }
+
+.login__row {
+  display: flex; align-items: center; gap: var(--space-3);
+  font-size: var(--text-sm); flex-wrap: wrap;
+}
+.login__check { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+.login__link {
+  margin-inline-start: auto; font-size: var(--text-sm);
+  color: var(--brand-navy); font-weight: 500;
+  text-decoration: underline; text-underline-offset: 2px;
+  text-decoration-color: rgba(12, 36, 69, 0.3);
+  transition: text-decoration-color var(--dur-micro) var(--ease-out);
+}
+.login__link:hover { text-decoration-color: currentColor; }
+
+.login__submit {
+  width: 100%; min-height: 46px;
+  margin-top: var(--space-2);
+  border: 0; border-radius: var(--radius);
+  background: var(--brand-navy); color: var(--ink-on-dark);
+  font-size: var(--text-md); font-weight: 600;
+  cursor: pointer; touch-action: manipulation;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  transition: background var(--dur-micro) var(--ease-out);
+}
+.login__submit:hover { background: var(--brand-navy-700); }
+.login__submit:active { background: var(--brand-navy-600); }
+.login__submit svg { width: 17px; height: 17px; }
+.login__submit[data-busy="true"] { background: var(--brand-navy-700); cursor: progress; }
+.login__submit .spinner {
+  width: 16px; height: 16px; flex: 0 0 auto;
+  border: 2px solid rgba(255,255,255,0.32);
+  border-top-color: var(--brand-yellow);
+  border-radius: 50%;
+  animation: spin 620ms linear infinite;
+}
+@keyframes spin { to { rotate: 360deg; } }
+
+.login__divider {
+  display: flex; align-items: center; gap: var(--space-3);
+  margin: var(--space-5) 0;
+  font-size: var(--text-2xs); color: var(--ink-muted);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.login__divider::before, .login__divider::after {
+  content: ""; flex: 1 1 auto; height: 1px; background: var(--border);
+}
+
+.login__roles { display: grid; gap: var(--space-2); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.login__role {
+  display: flex; align-items: center; gap: var(--space-2);
+  min-height: 40px; padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); cursor: pointer; text-align: start;
+  font-size: var(--text-xs); font-weight: 500;
+  transition: border-color var(--dur-micro) var(--ease-out),
+              background var(--dur-micro) var(--ease-out);
+}
+.login__role:hover { border-color: var(--brand-navy-300); background: var(--surface-hover); }
+.login__role svg { width: 15px; height: 15px; color: var(--ink-muted); flex: 0 0 auto; }
+.login__role span {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.login__foot {
+  flex: 0 0 auto;
+  display: flex; align-items: center; gap: var(--space-3);
+  font-size: var(--text-2xs); color: var(--ink-muted); flex-wrap: wrap;
+}
+.login__foot img { height: 13px; width: auto; opacity: 0.7; }
+
+/* ---- Right: the brand panel -------------------------------------------- */
+.login__brand-side {
+  position: relative; overflow: hidden;
+  background: var(--brand-navy); color: var(--ink-on-dark);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: var(--space-10);
+  min-width: 0;
+}
+@media (max-width: 899px) {
+  .login__brand-side { display: none; }
+}
+
+/* Quiet geometric field — Swiss grid, not decoration for its own sake */
+.login__mesh {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 70% at 72% 22%, #000 12%, transparent 78%);
+}
+.login__glow {
+  position: absolute; pointer-events: none;
+  width: 560px; height: 560px; border-radius: 50%;
+  top: -190px; inset-inline-end: -180px;
+  background: radial-gradient(circle, rgba(254,205,8,0.18), transparent 66%);
+}
+
+/* Centre the message in the free space; keep the stats pinned to the base,
+   so the panel never opens a void down its middle. */
+.login__panel-top { position: relative; margin-block: auto; }
+.login__panel-bottom { position: relative; }
+
+.login__quote {
+  font-size: 1.5rem; font-weight: 600; line-height: 1.35;
+  letter-spacing: -0.02em; max-width: 20ch; text-wrap: balance;
+}
+.login__quote em {
+  font-style: normal; color: var(--brand-yellow);
+}
+.login__quote-sub {
+  font-size: var(--text-sm); color: var(--ink-on-dark-dim);
+  margin-top: var(--space-4); max-width: 42ch; line-height: 1.6;
+}
+
+/* Module ticker — names all ten, so the panel earns its space */
+.login__modules {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: var(--space-6); max-width: 460px;
+}
+.login__module {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px var(--space-3);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.05);
+  font-size: var(--text-2xs); color: rgba(255,255,255,0.82);
+  white-space: nowrap;
+}
+.login__module b {
+  color: var(--brand-yellow); font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.login__stats {
+  display: flex; gap: var(--space-8); flex-wrap: wrap;
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.login__stat-value {
+  font-size: var(--text-2xl); font-weight: 700; letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.login__stat-label {
+  font-size: var(--text-2xs); color: rgba(255,255,255,0.6);
+  letter-spacing: 0.07em; text-transform: uppercase; margin-top: 3px;
+}
+
+/* Language switcher on the sign-in screen */
+.login__lang { position: relative; margin-inline-start: auto; }
+.login__lang > button {
+  display: inline-flex; align-items: center; gap: 7px;
+  min-height: 34px; padding: 0 var(--space-3);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); cursor: pointer;
+  font-size: var(--text-xs); font-weight: 500;
+  transition: border-color var(--dur-micro) var(--ease-out);
+}
+.login__lang > button:hover { border-color: var(--brand-navy-300); }
+.login__lang > button svg { width: 14px; height: 14px; color: var(--ink-muted); }
